@@ -1,4 +1,4 @@
-#基于Lemier的Bloofi论文源码的修改
+#基于Lemire的Bloofi论文源码的修改
 
 便于理解将主类加了中文注释解释过程
 
