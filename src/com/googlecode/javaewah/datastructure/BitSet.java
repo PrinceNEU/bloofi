@@ -80,8 +80,9 @@ public final class BitSet implements Cloneable {
      */
     public boolean get(final int i) {
         return (this.data[i / 64] & (1l << (i % 64))) != 0;
+        //1l << (i % 64)除了第i位都刷成0，若第i位与是1则与完的值非0，否则为0
     }
-
+    //用boolean类型返回第i位的内容
     public long getWord(int i) {
         return data[i];
     }
@@ -136,6 +137,7 @@ public final class BitSet implements Cloneable {
      *                current unset bit
      * @return next unset bit or -1
      */
+    //当BitSet作为arryb的时候，从第index=i的地方，开始查找第一个没被占用的BF位的index值，全被占用返回-1
     public int nextUnsetBit(final int i) {
         int x = i / 64;
         if (x >= this.data.length)
