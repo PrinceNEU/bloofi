@@ -1,3 +1,17 @@
+#基于Lemier的Bloofi论文源码的修改
+
+便于理解将主类加了中文注释解释过程
+
+FlatBFMerge是基于源码实现了动态合并的代码。
+在原论文中并未对删除进行优化，只在该flat块完全删空后释放掉该空间，极端情况下每一个flat块只能保存一个bloom filter，导致空间利用率过低。
+此代码中加入一个flag用于记录是否存在空间利用率低于50%的flat块
+当删除时判断本flat块是否删至32个bloom filter以下，若是，则判断flag是否为真，若为真则有两个低于50%的块，进行合并，flag归位未假，否则将flag置为真。
+实测空间利用率约为70%-80%
+
+除此之外还可以定期进行全局的合并，代码后期上传。
+
+#以下是原项目Readme
+
 # Bloofi: A java implementation of multidimensional Bloom filters
 
 Bloom filters are probabilistic data structures commonly used for approximate membership problems in many areas of Computer Science (networking, distributed systems, databases, etc.). With the increase in data size and distribution of data, problems arise where a large number of Bloom filters are available, and all them need to be searched for potential matches. As an example, in a federated cloud environment, each cloud provider could encode the information using Bloom filters and share the Bloom filters with a central coordinator. The problem of interest is not only whether a given element is in any of the sets represented by the Bloom filters, but which of the existing sets contain the given element. This problem cannot be solved by just constructing a Bloom filter on the union of all the sets. Instead, we effectively have a multidimensional Bloom filter problem: given an element, we wish to receive a list of candidate sets where the element might be.
